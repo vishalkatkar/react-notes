@@ -1,0 +1,39 @@
+.head {
+  font-size: 18px;
+  font-weight: 600;
+  width: 100%;
+  padding: 20px;
+  background-color: #dadada;
+  margin-bottom: 20px;
+  color: #6f6969;
+}
+
+._card {
+  padding: 5px 10px;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-right: unset;
+}
+
+._title {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+._body {
+  font-size: 15px;
+  font-weight: 500;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.left-align {
+  display: flex;
+  align-content: flex-end;
+  justify-content: flex-end;
+}
+
+.col-4 {
+  padding-right: unset !important;
+}
