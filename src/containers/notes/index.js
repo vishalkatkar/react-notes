@@ -3,15 +3,19 @@ import { Container, Row, Col, Button, FormGroup } from "reactstrap";
 import { AvForm, AvField } from "availity-reactstrap-validation";
 import "./style.css";
 import { useNotes } from "./hooks";
+import NoteForm from "../../Components/form";
 import { useSelector } from "react-redux";
 import ErrorComponent from "../../Components/error";
 
 const Login = () => {
   const {
     notes,
-    showAddNote,
-    setShowAddNote,
+    isEdit,
+    toggleEditNote,
+    toggleAddNote,
+    showNoteForm,
     handleAddNote,
+    handleUpdateNote,
     handleDeleteNote,
     noteTitle,
     noteBody,
@@ -31,8 +35,16 @@ const Login = () => {
         <Col xs="4" style={{ borderRight: "1px solid rgba(0, 0, 0, 0.125)" }}>
           {notes.length ? (
             notes.map((note, index) => (
-              <div key={note.id} className="_card">
-                <Button close onClick={() => handleDeleteNote(note.id)} />
+              <div
+                key={note.id}
+                className="_card"
+                onClick={(e) => toggleEditNote(note.id, e)}
+              >
+                <Button
+                  className="_delete"
+                  close
+                  onClick={(e) => handleDeleteNote(note.id, e)}
+                />
                 <div className="_title">{note.title}</div>
                 <div className="_body">{note.body}</div>
               </div>
@@ -43,44 +55,23 @@ const Login = () => {
         </Col>
         <Col xs="8">
           <div className="left-align">
-            <Button
-              outline
-              color="secondary"
-              onClick={() => setShowAddNote(true)}
-            >
+            <Button outline color="secondary" onClick={toggleAddNote}>
               <span>+</span> Add Note
             </Button>
           </div>
           <br />
           <br />
           <br />
-          {showAddNote && (
-            <AvForm>
-              <FormGroup>
-                <label>Title:</label>
-                <AvField
-                  required
-                  name="title"
-                  value={noteTitle}
-                  onChange={(e) => setNoteTitle(e.target.value)}
-                />
-                <br />
-                <label>Body:</label>
-                <AvField
-                  required
-                  name="body"
-                  type="textarea"
-                  value={noteBody}
-                  onChange={(e) => setNoteBody(e.target.value)}
-                />
-                <br />
-                <div className="left-align">
-                  <Button type="submit" onClick={handleAddNote} color="info">
-                    save
-                  </Button>
-                </div>
-              </FormGroup>
-            </AvForm>
+          {showNoteForm && (
+            <NoteForm
+              isEdit={isEdit}
+              handleAddNote={handleAddNote}
+              handleUpdateNote={handleUpdateNote}
+              noteTitle={noteTitle}
+              noteBody={noteBody}
+              setNoteTitle={setNoteTitle}
+              setNoteBody={setNoteBody}
+            />
           )}
         </Col>
       </Row>

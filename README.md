@@ -4,6 +4,10 @@ First you need to install dependency using following command:
 
 ### `yarn install`
 
+First you need to install dependency using following command:
+
+### `yarn install`
+
 In the project directory, you can run:
 
 ### `yarn start`
