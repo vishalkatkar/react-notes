@@ -13,6 +13,7 @@ const Login = () => {
     isEdit,
     toggleEditNote,
     toggleAddNote,
+    showNoteList,
     showNoteForm,
     handleAddNote,
     handleUpdateNote,
@@ -28,32 +29,33 @@ const Login = () => {
     return <ErrorComponent />;
   }
 
+  let noteListRender = <div>Empty!!</div>;
+
+  if (notes.length) {
+    noteListRender = notes.map((note) => (
+      <div
+        key={note.id}
+        className="_card"
+        onClick={(e) => toggleEditNote(note.id, e)}
+      >
+        <Button
+          className="_delete"
+          close
+          onClick={(e) => handleDeleteNote(note.id, e)}
+        />
+        <div className="_title">{note.title}</div>
+        <div className="_body">{note.body}</div>
+      </div>
+    ));
+  }
   return (
     <Container>
       <div className="head">G Notes</div>
       <Row>
-        <Col xs="4" style={{ borderRight: "1px solid rgba(0, 0, 0, 0.125)" }}>
-          {notes.length ? (
-            notes.map((note, index) => (
-              <div
-                key={note.id}
-                className="_card"
-                onClick={(e) => toggleEditNote(note.id, e)}
-              >
-                <Button
-                  className="_delete"
-                  close
-                  onClick={(e) => handleDeleteNote(note.id, e)}
-                />
-                <div className="_title">{note.title}</div>
-                <div className="_body">{note.body}</div>
-              </div>
-            ))
-          ) : (
-            <div>Empty!!</div>
-          )}
+        <Col md="4" sm="12" className="notes-container">
+          {showNoteList && noteListRender}
         </Col>
-        <Col xs="8">
+        <Col md="8" sm="12">
           <div className="left-align">
             <Button outline color="secondary" onClick={toggleAddNote}>
               <span>+</span> Add Note

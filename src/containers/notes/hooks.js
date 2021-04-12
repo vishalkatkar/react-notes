@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setAddNote, setUpdateNote, setDeletNote } from "./actions";
 import { setAppError } from "../../redux/commanActions";
+import { isMobileDevive } from "../../utils";
 
 export const useNotes = () => {
   const dispatch = useDispatch();
@@ -10,6 +11,7 @@ export const useNotes = () => {
   const [noteTitle, setNoteTitle] = useState(null);
   const [noteBody, setNoteBody] = useState(null);
   const [counter, setCounterId] = useState(0);
+  const [showNoteList, setShowNoteList] = useState(true);
   const [showNoteForm, setShowNoteForm] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [updateId, setUpdateId] = useState(null);
@@ -17,6 +19,11 @@ export const useNotes = () => {
   const toggleAddNote = () => {
     setIsEdit(false);
     setShowNoteForm(true);
+    setNoteTitle("");
+    setNoteBody("");
+    if (isMobileDevive()) {
+      setShowNoteList(false);
+    }
   };
 
   const toggleEditNote = (id, event) => {
@@ -24,9 +31,13 @@ export const useNotes = () => {
     setIsEdit(true);
     setShowNoteForm(true);
     setUpdateId(id);
-    if (notes[id]) {
-      setNoteTitle(notes[id].title);
-      setNoteBody(notes[id].body);
+    const index = notes.findIndex((note) => note.id === id);
+    if (notes[index]) {
+      setNoteTitle(notes[index].title);
+      setNoteBody(notes[index].body);
+    }
+    if (isMobileDevive()) {
+      setShowNoteList(false);
     }
   };
 
@@ -64,6 +75,9 @@ export const useNotes = () => {
   };
 
   const clearFiled = () => {
+    if (isMobileDevive()) {
+      setShowNoteList(true);
+    }
     setShowNoteForm(false);
     setIsEdit(false);
     setNoteTitle("");
@@ -76,6 +90,7 @@ export const useNotes = () => {
     toggleEditNote,
     toggleAddNote,
     showNoteForm,
+    showNoteList,
     handleAddNote,
     handleUpdateNote,
     handleDeleteNote,

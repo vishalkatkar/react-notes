@@ -12,7 +12,6 @@
   cursor: pointer;
   padding: 5px 10px;
   border: 1px solid rgba(0, 0, 0, 0.125);
-  border-right: unset;
 }
 
 ._title {
@@ -37,4 +36,15 @@
 
 .col-4 {
   padding-right: unset !important;
+}
+
+.notes-container {
+  padding-bottom: 20px;
+  border-right: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+@media only screen and (max-width: 768px) {
+  .notes-container {
+    border-right: unset;
+  }
 }
